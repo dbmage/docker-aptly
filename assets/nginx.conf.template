@@ -4,11 +4,27 @@ server_tokens off;
 server {
   listen 80 default_server;
   server_name _;
-
   root /opt/aptly/public;
+  index index.html index.htm;
+
+  access_log /var/log/nginx/packages.access.log  log_access;
+  error_log /var/log/nginx/packages.error.log error;
+
+  autoindex off;
   location / {
+    try_files $uri $uri/;
+  }
+  location /ui/ {
+    try_files $uri $uri/ /ui/index.html;
+    autoindex off;
+  }
+  location /dist/ {
     autoindex on;
   }
+  location /pool/ {
+    autoindex on;
+  }
+  
   location /api/ {
     auth_basic "Restricted";
     auth_basic_user_file /opt/aptly/api.htpasswd;
