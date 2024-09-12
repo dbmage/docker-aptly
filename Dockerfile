@@ -33,7 +33,8 @@ RUN apt-get -q update \
     xz-utils \
     apt-utils \
     gettext-base \
-    bash-completion
+    bash-completion \ 
+    nodejs
 
 RUN curl -sL https://www.aptly.info/pubkey.txt | gpg --dearmor | tee /etc/apt/trusted.gpg.d/aptly.gpg >/dev/null \
   && echo "deb http://repo.aptly.info/ squeeze main" >> /etc/apt/sources.list
@@ -68,6 +69,14 @@ RUN echo "if ! shopt -oq posix; then\n\
     . /etc/bash_completion\n\
   fi\n\
 fi" >> /etc/bash.bashrc
+
+# UI (sdumetz/aptly-web-ui)
+RUN cd /tmp/ \
+  && git clone git@github.com:sdumetz/aptly-web-ui.git \
+  && cd aptly-web-ui \
+  && npm install \
+  && ./deploy.sh \
+  && tar -xzvf aptly-web-ui.tar.gz /opt/aptly/public/
 
 # Declare ports in use
 EXPOSE 80 8080
