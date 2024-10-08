@@ -49,7 +49,7 @@ RUN apt-get -q update \
 RUN rm /etc/nginx/sites-enabled/*
 
 # Create volume
-# VOLUME [ "/opt/aptly" ]
+VOLUME [ "/opt/aptly" ]
 
 ENV GNUPGHOME="/opt/aptly/gpg"
 
