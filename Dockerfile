@@ -16,8 +16,6 @@
 
 FROM debian:buster
 
-LABEL maintainer="urpylka@gmail.com"
-
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Update APT repository & install packages (except aptly)
@@ -34,7 +32,9 @@ RUN apt-get -q update \
     apt-utils \
     gettext-base \
     bash-completion \ 
-    nodejs
+    git \
+    nodejs \
+    npm
 
 RUN curl -sL https://www.aptly.info/pubkey.txt | gpg --dearmor | tee /etc/apt/trusted.gpg.d/aptly.gpg >/dev/null \
   && echo "deb http://repo.aptly.info/ squeeze main" >> /etc/apt/sources.list
@@ -72,11 +72,11 @@ fi" >> /etc/bash.bashrc
 
 # UI (sdumetz/aptly-web-ui)
 RUN cd /tmp/ \
-  && git clone git@github.com:sdumetz/aptly-web-ui.git \
+  && git clone https://github.com/sdumetz/aptly-web-ui.git \
   && cd aptly-web-ui \
   && npm install \
   && ./deploy.sh \
-  && tar -xzvf aptly-web-ui.tar.gz /opt/aptly/public/
+  && tar -xzvf aptly-web-ui.tar.gz -C /opt/aptly/public/
 
 # Declare ports in use
 EXPOSE 80 8080
