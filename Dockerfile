@@ -49,7 +49,8 @@ RUN apt-get -q update \
 RUN rm /etc/nginx/sites-enabled/*
 
 # Create volume
-VOLUME [ "/opt/aptly" ]
+# VOLUME [ "/opt/aptly" ]
+
 ENV GNUPGHOME="/opt/aptly/gpg"
 
 # Install configurations
@@ -59,6 +60,9 @@ COPY assets/supervisord.web.conf /etc/supervisor/conf.d/web.conf
 
 # Install scripts
 COPY assets/*.sh /opt/
+
+# Create public dir if deosn't exist
+RUN mkdir -p /opt/aptly/public
 
 ADD https://raw.githubusercontent.com/aptly-dev/aptly/v1.5.0/completion.d/aptly /usr/share/bash-completion/completions/aptly
 
