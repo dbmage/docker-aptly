@@ -94,7 +94,7 @@
 
     * **Configure your own debian-repository.** See [here](#configure-the-repository).
 
-        You can also use [Aptly REST API](https://www.aptly.info/doc/api/) at `YOUR-HOST/api`. You need to generate `htpasswd` file before.
+    * You can also use [Aptly REST API](https://www.aptly.info/doc/api/) at `YOUR-HOST/api`. You need to generate `htpasswd` file before.
 
         ```bash
         docker run --rm --log-driver=none \
@@ -110,6 +110,9 @@
         ```
 
         **Security:** Please note using http is not safety (your password sends as plain text). Add mandatory SSL encryption for `/api` via proxy server fe nginx. See [here](https://morph027.gitlab.io/blog/protect-aptly-api-with-basic-authentication/).
+
+    * You can use the web interface (From Sdumetz [here](https://github.com/sdumetz/aptly-web-ui)), which uses the same credentials as the API (see above).
+        This is located at `http://YOU-HOST/ui`.
 
     * **Configure a mirror of some repo.** See [here](#configure-the-mirror).
 

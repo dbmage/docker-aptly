@@ -7,7 +7,7 @@ server {
   root /opt/aptly/public;
   index index.html index.htm;
 
-  access_log /var/log/nginx/packages.access.log  log_access;
+  access_log /var/log/nginx/packages.access.log combined;
   error_log /var/log/nginx/packages.error.log error;
 
   autoindex off;
